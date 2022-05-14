@@ -1,0 +1,25 @@
+{
+  "name": "switch",
+  "version": "1.0.0",
+  "description": "sn",
+  "main": "index.js",
+  "scripts": {
+    "star": "nodemon ./bin/www",
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "mernpress",
+    "cms"
+  ],
+  "author": "Manlow Charumbira",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.2",
+    "cors": "^2.8.5",
+    "express": "^4.17.3",
+    "jsonwebtoken": "^8.5.1",
+    "mysql2": "^2.3.0",
+    "sequelize": "^6.6.5"
+  }
+}
