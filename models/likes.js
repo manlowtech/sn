@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
       type:DataTypes.INTEGER,
       allowNull:true
     },
-    comment_type:{
+    like_type:{
       type:DataTypes.STRING,
       allowNull:false,
       defaultValue:"post" // posts,comment,hooks

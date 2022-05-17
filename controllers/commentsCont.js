@@ -1,15 +1,9 @@
+const Comment = require("../models").post_comments
+
 const Posts = require('../models').Posts;
 const LikeCont = require("../models").likes
 //const multer = require('multer');
 const path = require('path');
-/*
-===============POLARITY LEVELS===================
--1to-0.5 ====>very -ve
--0.5to 0 =====>-ve
-0 ===============>neutral
-0-0.5========>positive
-0.5to1==================>very +ve
-*/
 module.exports = {
     create(req, res) {
         const {post_content,user_id} = req.body
@@ -20,25 +14,27 @@ module.exports = {
             if(media_name){
                 return `/media/posts/${uid}/${media_name}`
             }
-            return "nothing"
+            return 
         }
         return Posts
-            .create({ //===================TESTED=============DONE=========================
-                user_id:req.params.user_id,
+            .create({
+                title: req.body.title,
+                user_id:user_id,
                 post_content: req.body.post_content,
                 polarity: postPolarity(post_content),
-                media_url:mediaUrl(req.params.user_id,req.body.media_name)
+                post_category: req.body.category,
+                media_url:mediaUrl(req.body.user_id,req.body.media_name)
             }).then(t => {
-                return LikeCont.create({ // initialize like count to zero
-                    post_id:t["id"],
+                LikeCont.create({ // initialize like count to zero
+                    post_id:t[0].id,
                     like_count:0,
-                }).then(init=>res.status(200).json({like_count:init,init_success:true,posts:t}))
+                }).then(init=>res.status(200).json({like_count:init,init_success:true}))
                 .catch(err=>res.json({err:err,init_success:false}))
                 res.status(200).json({post_success:true,posts:t,like_count:init})
             })
             .catch(err => res.status(400).send(err));
     },
-    findAllPosts(req, res) { //=============TETESD=====STATE,TBDONE==============DONE====
+    findAllPosts(req, res) {
         return Posts
             .findAll({
                 where: {
@@ -48,7 +44,7 @@ module.exports = {
             }).then(data => res.status(200).json({ success: true, posts: data, }))
             .catch(err => res.status(400).json({ err: err }));
     },
-    homePagePosts(req, res) {//=============TO USE SOME ALGORITHM
+    homePagePosts(req, res) {
         return Posts
             .findAll({
                 where: {
@@ -57,7 +53,7 @@ module.exports = {
             }).then(data => res.status(200).json({ success: true, pages: data, }))
             .catch(err => res.status(400).json({ err: err }));
     },
-    findOnePost(req, res) { //=============DONE====================
+    findOnePost(req, res) {
         return Posts
             .findOne({
                 where: {
@@ -67,7 +63,7 @@ module.exports = {
             .catch(err => console.log(err));
     },
     updatePost(req, res) {
-        return Posts.update(req.body, { // to update for empty cells check
+        return Posts.update(req.body, { // to update for empty cells
             where: {
                 id: req.params.post_id,
                 user_id:req.body.user_id

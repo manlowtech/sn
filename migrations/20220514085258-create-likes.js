@@ -19,7 +19,7 @@ module.exports = {
         type:Sequelize.INTEGER,
         allowNull:true
       },
-      comment_type:{
+      like_type:{
         type:Sequelize.STRING,
         allowNull:false,
         defaultValue:"post"
