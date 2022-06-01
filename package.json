@@ -7,9 +7,9 @@
     "star": "nodemon ./bin/www",
     "start": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prod":"npm run scli npx sequelize-cli db:migrate node index.js",
+    "prod":"npm run scli && npx sequelize-cli db:migrate node index.js",
     "scli":"npm i sequelize-cli",
-    "heroku-postbuild":"npm install npm run scli node index.js"
+    "heroku-postbuild":"npm install && npm install sequelize-cli && npm run scli && node index.js"
   },
   "keywords": [
     "mernpress",
