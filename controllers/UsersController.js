@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt")
 module.exports ={
     create(req,res){
+        const {password} = req.body
         const ueracc = user.findOne({where:{
             username:req.body.username
         }})
@@ -11,7 +12,7 @@ module.exports ={
         }else{
             return user.create({
                 username:req.body.username,
-                password: await bcrypt.hash(req.body.password,10),
+                password: await bcrypt.hash(password,10),
                 //role:req.body.role,
                 email:req.body.email
                 
